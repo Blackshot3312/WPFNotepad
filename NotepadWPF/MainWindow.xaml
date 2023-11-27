@@ -1,0 +1,74 @@
+﻿<Window x:Name="window" x:Class="NotepadWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:NotepadWPF"
+        xmlns:viewmodels="clr-namespace:NotepadWPF.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        
+        WindowStartupLocation="CenterScreen"
+        Title="Bloco de notas" Height="450" Width="800" Background="#01000000" Icon="/02.png" BorderBrush="LightGray">
+    <Window.Effect>
+        <DropShadowEffect/>
+    </Window.Effect>
+    <!--WindowConfigurations, upper line 14, 15-->
+
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+
+
+    </Window.DataContext>
+
+    <DockPanel Margin="0">
+        <Menu DockPanel.Dock="Top" Background="#FF291A22" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="33">
+            <Menu.Effect>
+                <DropShadowEffect/>
+            </Menu.Effect>
+            <Menu.Items>
+                <MenuItem Header="Arquivo" DataContext="{Binding File}" Foreground="White" Height="33">
+                    <MenuItem Header="Novo" Command="{Binding NewCommand}" Background="#FF1B0010"/>
+                    <MenuItem Header="Abrir" Command="{Binding OpenCommnad}" Background="#FF1B0010"/>
+                    <MenuItem Header="Salvar" Command="{Binding SaveCommand}" Background="#FF1B0010"/>
+                    <MenuItem Header="Salvar como..." Command="{Binding SaveAsCommand}" Background="#FF1B0010"/>
+                </MenuItem>
+                <MenuItem Header="Formatação" DataContext="{Binding Editor}" Foreground="White">
+                    <MenuItem Header="Formato" Command="{Binding FormatCommand}" Background="#FF1B0010"/>
+                    <MenuItem Header="Quebra de linha" Command="{Binding WrapCommand}" Background="#FF1B0010"/>
+                </MenuItem>
+                <MenuItem Header="Ajuda" DataContext="{Binding Help}" Foreground="White">
+                    <MenuItem Header="Sobre" Command="{Binding HelpCommand}" Background="#FF1B0010"/>
+                </MenuItem>
+
+
+            </Menu.Items>
+        </Menu>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Bottom"
+                       DataContext="{Binding File.Document}"
+                       Text="{Binding filePath}" Background="#FF2B1A1D"/>
+            <TextBox DockPanel.Dock="Top"
+                       VerticalScrollBarVisibility="Visible"
+                     DataContext="{Binding Editor}"
+                     FontFamily="{Binding Format.Family}"
+                     FontSize="{Binding Format.Size}"
+                     FontStyle="{Binding Format.Style}"
+                     FontWeight="{Binding Format.Weight}"
+                     TextWrapping="{Binding Format.Wrap}"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     Text="{Binding Document.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#FF272727" TextChanged="TextBox_TextChanged" Foreground="White">
+                <TextBox.Effect>
+                    <DropShadowEffect/>
+                </TextBox.Effect>
+            </TextBox>
+
+
+
+        </DockPanel>
+
+    </DockPanel>
+
+</Window>
